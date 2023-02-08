@@ -6,8 +6,6 @@
 
 import path from 'path';
 import dotenv from 'dotenv';
-import log from '../setup/Log';
-import { Logform } from 'winston';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 const mongooseTestUrl = 'mongodb://127.0.0.1:27017/gps_test';
@@ -20,15 +18,16 @@ export const config = {
         name: process.env.APP_NAME || 'GPS_gRPC',
         year: new Date().getFullYear(),
         jwtExpiresIn: process.env.JWT_EXPIRES_IN || 3,
-        apiPrefix: process.env.API_PREFIX || 'api',
-        logDays: process.env.LOG_DAYS || 10
+        logDays: process.env.LOG_DAYS || 10,
+        protoPath: process.env.PROTO_FILE || './proto/gps.proto',
+        serverUrl: process.env.APP_URL || '0.0.0.0:4040'
     },
     dataBase: {
         mongo: {
             url:
                 process.env.NODE_ENV === 'test'
                     ? mongooseTestUrl
-                    : process.env.MONGOOSE_URL || 'mongodb://127.0.0.1:27017/gps_test'
+                    : process.env.MONGOOSE_URL || 'mongodb://mongo:27017/gps_test'
         }
     },
     logger: {

@@ -1,4 +1,16 @@
-import log from 'setup/Log';
-import { Database } from 'setup/Database';
+import { Server } from './server';
+import { Database } from './setup/Database';
+import log from './setup/Log';
 
-Database.init();
+async function main() {
+    try {
+        const server = new Server();
+        server.addHandlers();
+        await server.createServer();
+        await Database.init();
+    } catch (error) {
+        log.error(`Error while booting service ${error}`);
+    }
+}
+
+main();

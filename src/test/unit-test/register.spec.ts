@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-before(() => {});
+before(() => { });
 
-describe('Register Controller', () => {
-    it('Should mock user data', () => {});
-});
+// describe('Register Controller', () => {
+//     it('Should mock user data', () => {});
+// });

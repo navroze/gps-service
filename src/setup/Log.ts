@@ -3,10 +3,6 @@
  */
 import { createLogger, transports, format } from 'winston';
 import moment from 'moment';
-import { config } from 'config/config';
-import os from 'os';
-
-let logFolder = config.logger.folder;
 
 var options = {
     file: {
@@ -36,7 +32,7 @@ const loggerObj = createLogger({
         format.colorize(),
         format.timestamp(),
         format.printf(({ timestamp, level, message }) => {
-            return `[${timestamp}]${os.hostname()} ${level}: ${message}`;
+            return `[${timestamp}] ${level}: ${message}`;
         })
     ),
     transports: [

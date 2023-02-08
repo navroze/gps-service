@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package gps;
+
+service GpsService {
+  rpc CreateGpsRecord (GpsCoordinates) returns (GpsResponse) {}
+}
+
+message GpsResponse {
+  bool status = 1;
+  string message = 2;
+}
+
+message GpsCoordinates {
+  double latitude = 1;
+  double longitude = 2;
+  string email = 3;
+}
