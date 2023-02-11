@@ -4,7 +4,7 @@
 import { createLogger, transports, format } from 'winston';
 import moment from 'moment';
 
-var options = {
+const options = {
     file: {
         timestamp: function () {
             return moment.utc().format('YYYY-MM-DDTHH:mm:ss');

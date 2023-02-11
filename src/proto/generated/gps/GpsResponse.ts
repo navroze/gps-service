@@ -3,10 +3,10 @@
 
 export interface GpsResponse {
   'status'?: (boolean);
-  'message'?: (string);
+  'recordId'?: (string);
 }
 
 export interface GpsResponse__Output {
   'status'?: (boolean);
-  'message'?: (string);
+  'recordId'?: (string);
 }

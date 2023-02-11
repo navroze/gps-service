@@ -1,14 +1,13 @@
 /**
  * Define Database connection
  */
-
 import mongoose from 'mongoose';
 
 import { config } from '../config/config';
 import log from './Log';
 
 export class Database {
-    // Initialize your database pool
+    // Initialize your database
     public static init(): Promise<void> {
         return new Promise((resolve, reject) => {
             const dsn = config.dataBase.mongo.url;

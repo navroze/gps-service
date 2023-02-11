@@ -36,7 +36,7 @@ export class Server {
         } as GpsServiceHandlers);
     }
 
-    createServer(): Promise<void> {
+    startServer(): Promise<void> {
         return new Promise((resolve) => {
             this.server.bindAsync(`0.0.0.0:${this.port}`,
                 grpc.ServerCredentials.createInsecure(),
@@ -46,7 +46,7 @@ export class Server {
                         process.exit(1);
                     }
                     this.server.start();
-                    log.info(`Your server has started on port ${port}`);
+                    log.info(`gRPC server has started on port ${port}`);
                     return resolve();
                 });
         })

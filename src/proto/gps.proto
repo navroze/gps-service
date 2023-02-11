@@ -8,7 +8,7 @@ service GpsService {
 
 message GpsResponse {
   bool status = 1;
-  string message = 2;
+  string recordId = 2;
 }
 
 message GpsCoordinates {

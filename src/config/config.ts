@@ -1,33 +1,38 @@
 /**
  * Define App Configs
- *
- * @author Navroze Bomanji
  */
 
 import path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
-const mongooseTestUrl = 'mongodb://127.0.0.1:27017/gps_test';
+
+function getMongooseUrl(): string {
+    const url: Record<string, string> = {
+        "development": process.env.MONGOOSE_URL_DEV || 'mongodb://localhost:27017/gps',
+        "test": process.env.MONGOOSE_URL_TEST || 'mongodb://localhost:27017/gps_test'
+    };
+    const nodeEnv = process.env.NODE_ENV || 'development';
+    return url[nodeEnv];
+}
 
 export const config = {
     server: {
-        url: process.env.APP_URL || `http://localhost:${process.env.PORT}`,
+        url: process.env.APP_URL || `0.0.0.0:4040`,
         port: process.env.PORT || 4040,
-        appSecret: process.env.APP_SECRET || 'This is your responsibility!',
         name: process.env.APP_NAME || 'GPS_gRPC',
-        year: new Date().getFullYear(),
         jwtExpiresIn: process.env.JWT_EXPIRES_IN || 3,
         logDays: process.env.LOG_DAYS || 10,
         protoPath: process.env.PROTO_FILE || './proto/gps.proto',
         serverUrl: process.env.APP_URL || '0.0.0.0:4040'
     },
+    expressServer: {
+        port: process.env.EXPRESS_SERVER || 8080,
+        jwtSecret: process.env.JWT_SECRET || 'This is sparta'
+    },
     dataBase: {
         mongo: {
-            url:
-                process.env.NODE_ENV === 'test'
-                    ? mongooseTestUrl
-                    : process.env.MONGOOSE_URL || 'mongodb://mongo:27017/gps_test'
+            url: getMongooseUrl()
         }
     },
     logger: {
