@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 export interface IGps {
     latitude: string;
     longitude: string;
-    email: string
-};
+    email: string;
+}
 
 export interface IGpsModel extends IGps, mongoose.Document { }
 
@@ -17,4 +17,3 @@ export const GpsSchema = new mongoose.Schema<IGpsModel>({
 });
 
 export const Gps = mongoose.model<IGpsModel>('Gps', GpsSchema);
-

@@ -15,18 +15,19 @@ const PROTO_FILE = config.server.protoPath;
 export class Client {
     client: GpsServiceClient;
     constructor() {
-        //Load the gps Proto package
+        // Load the gps Proto package
         const packageDef = protoLoader.loadSync(path.resolve(__dirname, PROTO_FILE));
         const grpcObj = (grpc.loadPackageDefinition(packageDef) as unknown) as ProtoGrpcType;
         const gpsPackage = grpcObj.gps;
 
-        //If package is not present throw error
-        if (!gpsPackage)
+        // If package is not present throw error
+        if (!gpsPackage) {
             throw new Error('Could not load proto gpsPackage');
+        }
 
         this.client = new gpsPackage.GpsService(
             `0.0.0.0:${PORT}`, grpc.credentials.createInsecure()
-        )
+        );
     }
 
     async sendRequest(request: GpsCoordinates): Promise<GpsResponse | undefined> {
@@ -37,7 +38,7 @@ export class Client {
                     return reject(err);
                 }
                 return resolve(result);
-            })
+            });
         });
     }
 }

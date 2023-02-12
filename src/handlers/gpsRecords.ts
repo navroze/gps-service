@@ -14,6 +14,6 @@ export const createGpsRecordHandler = async (req: Request, res: Response) => {
         res.status(201).json(response);
     } catch (error) {
         log.error(getErrorMessage(error));
-        res.status(500).json({ error: true, message: "Something went wrong" });
+        res.status(500).json({ error: true, message: 'Something went wrong' });
     }
 };

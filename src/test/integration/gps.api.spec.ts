@@ -1,12 +1,11 @@
 import { UserModel } from './../../models/user';
 import { Database } from 'setup/Database';
-import { randLongitude, randLatitude, randEmail, randPassword } from "@ngneat/falso";
+import { randLongitude, randLatitude } from '@ngneat/falso';
 
-import { expect } from "chai";
-import request from "supertest";
+import { expect } from 'chai';
+import request from 'supertest';
 import app from '../../setup/ExpressServer';
 import { Gps } from '../../models/gps';
-
 
 let gpsRequest: any;
 let token: string;
@@ -14,9 +13,9 @@ let token: string;
 before(async () => {
     await Database.init();
     await UserModel.deleteMany({});
-    let userData = {
-        email: "test@email.com",
-        password: "password"
+    const userData = {
+        email: 'test@email.com',
+        password: 'password'
     };
     await request(app)
         .post('/api/register')
@@ -35,11 +34,10 @@ beforeEach(async () => {
     gpsRequest = {
         latitude: randLatitude().toString(),
         longitude: randLongitude().toString(),
-        email: "test@email.com"
+        email: 'test@email.com'
     };
     await Gps.deleteMany({});
 });
-
 
 describe('GPS API test', () => {
     it('Test Healthcheck', (done) => {
@@ -68,7 +66,7 @@ describe('GPS API test', () => {
 
     it('Should create two record in the database', async () => {
         try {
-            const result = await request(app)
+            await request(app)
                 .post('/api/gps-record')
                 .send(gpsRequest)
                 .set('Authorization', `Bearer ${token}`)
@@ -81,7 +79,7 @@ describe('GPS API test', () => {
             const records = await Gps.find();
             expect(records.length).to.equal(2);
         } catch (error) {
-            console.log("error", error);
+            console.log('error', error);
         }
 
     });
@@ -96,7 +94,7 @@ describe('GPS API test', () => {
             .end((err, result) => {
                 expect(result.body[0].code).to.equal('invalid_type');
                 done();
-            })
+            });
     });
 
     it('Should give 422 for invalid null longitude', (done) => {
@@ -109,7 +107,7 @@ describe('GPS API test', () => {
             .end((err, result) => {
                 expect(result.body[0].code).to.equal('invalid_type');
                 done();
-            })
+            });
     });
 
     it('Should give 422 for invalid null email', (done) => {
@@ -122,7 +120,7 @@ describe('GPS API test', () => {
             .end((err, result) => {
                 expect(result.body[0].code).to.equal('invalid_type');
                 done();
-            })
+            });
     });
 
     it('Should give 422 for invalid latitude', (done) => {
@@ -135,7 +133,7 @@ describe('GPS API test', () => {
             .end((err, result) => {
                 expect(result.body[0].code).to.equal('custom');
                 done();
-            })
+            });
     });
 
     it('Should give 422 for invalid null longitude', (done) => {
@@ -148,7 +146,7 @@ describe('GPS API test', () => {
             .end((err, result) => {
                 expect(result.body[0].code).to.equal('custom');
                 done();
-            })
+            });
     });
 
     it('Should give 422 for invalid email', (done) => {
@@ -161,7 +159,6 @@ describe('GPS API test', () => {
             .end((err, result) => {
                 expect(result.body[0].code).to.equal('invalid_string');
                 done();
-            })
+            });
     });
 });
-

@@ -3,19 +3,15 @@ import log from '../setup/Log';
 
 const gpsService = {
     createRecord: async (record: IGps): Promise<string> => {
-        try {
-            const { latitude, longitude, email } = record;
-            const gps = new Gps({
-                latitude,
-                longitude,
-                email
-            });
-            const savedRecord = await gps.save();
-            log.info(`Record for ${record.email} saved successfully`);
-            return savedRecord["_id"];
-        } catch (error) {
-            throw error;
-        }
+        const { latitude, longitude, email } = record;
+        const gps = new Gps({
+            latitude,
+            longitude,
+            email
+        });
+        const savedRecord = await gps.save();
+        log.info(`Record for ${record.email} saved successfully`);
+        return savedRecord['_id'];
     }
 };
 

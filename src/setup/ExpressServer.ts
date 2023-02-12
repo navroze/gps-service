@@ -27,7 +27,6 @@ export const startExpressServer = (): Promise<void> => {
             log.error(`Error starting express server ${error}`);
         });
     });
-}
-
+};
 
 export default app;

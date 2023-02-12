@@ -21,7 +21,6 @@ const packageDef = protoLoader.loadSync(path.resolve(__dirname, config.server.pr
 const grpcObj = (grpc.loadPackageDefinition(packageDef) as unknown) as ProtoGrpcType;
 const gpsPackage = grpcObj.gps;
 
-
 export class Server {
     private server: grpc.Server;
     private port: string;
@@ -49,7 +48,7 @@ export class Server {
                     log.info(`gRPC server has started on port ${port}`);
                     return resolve();
                 });
-        })
+        });
     }
 
     shutDownServer(): void {

@@ -69,5 +69,4 @@ describe('gRPC service unit tests mock', () => {
         saveStub.restore();
     });
 
-
 });

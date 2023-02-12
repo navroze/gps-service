@@ -1,11 +1,11 @@
 import { Database } from 'setup/Database';
-import { randLongitude, randLatitude, randEmail } from "@ngneat/falso";
+import { randLongitude, randLatitude, randEmail } from '@ngneat/falso';
 
 import { Server } from '../../server';
 import { Client } from '../../client';
-import { expect } from "chai";
+import { expect } from 'chai';
 import { Gps } from '../../models/gps';
-import { GpsResponse } from "../../proto/generated/gps/GpsResponse";
+import { GpsResponse } from '../../proto/generated/gps/GpsResponse';
 import gps from '../../services/gps';
 
 let server: Server;
@@ -20,7 +20,7 @@ before(async () => {
     await Database.init();
 });
 
-after(done => {
+after(() => {
     server.shutDownServer();
     process.exit(1);
 });
@@ -39,7 +39,7 @@ describe('Database tests', () => {
         await gps.createRecord(request);
         const results = await Gps.find({});
         expect(results.length).to.equal(1);
-    })
+    });
 
     it('Should create 2 gps records in Database', async () => {
         await gps.createRecord(request);
@@ -53,7 +53,7 @@ describe('Database tests', () => {
             delete request.latitude;
             await gps.createRecord(request);
         } catch (error: any) {
-            expect(error.errors).to.have.key("latitude");
+            expect(error.errors).to.have.key('latitude');
         }
     });
 
@@ -62,7 +62,7 @@ describe('Database tests', () => {
             delete request.logitude;
             await gps.createRecord(request);
         } catch (error: any) {
-            expect(error.errors).to.have.key("longitude");
+            expect(error.errors).to.have.key('longitude');
         }
     });
 
@@ -71,7 +71,7 @@ describe('Database tests', () => {
             delete request.email;
             await gps.createRecord(request);
         } catch (error: any) {
-            expect(error.errors).to.have.key("email");
+            expect(error.errors).to.have.key('email');
         }
     });
 
@@ -80,7 +80,7 @@ describe('Database tests', () => {
             request.latitude = null;
             await gps.createRecord(request);
         } catch (error: any) {
-            expect(error.errors).to.have.key("latitude");
+            expect(error.errors).to.have.key('latitude');
         }
     });
 
@@ -89,7 +89,7 @@ describe('Database tests', () => {
             delete request.logitude;
             await gps.createRecord(request);
         } catch (error: any) {
-            expect(error.errors).to.have.key("longitude");
+            expect(error.errors).to.have.key('longitude');
         }
     });
 
@@ -98,12 +98,11 @@ describe('Database tests', () => {
             request.latitude = null;
             await gps.createRecord(request);
         } catch (error: any) {
-            expect(error.errors).to.have.key("latitude");
+            expect(error.errors).to.have.key('latitude');
         }
     });
 
 });
-
 
 describe('gRPC Server Checks', () => {
     it('Client establishes a connection and calls server', async () => {
@@ -111,7 +110,7 @@ describe('gRPC Server Checks', () => {
             const response = await client.sendRequest(request) as GpsResponse;
             expect(response.status).to.equal(true);
         } catch (error) {
-            console.log("error in booting client", error);
+            console.log('error in booting client', error);
         }
     });
 

@@ -1,8 +1,8 @@
 import { Database } from 'setup/Database';
-import { randEmail, randPassword } from "@ngneat/falso";
+import { randEmail, randPassword } from '@ngneat/falso';
 
-import { expect } from "chai";
-import request from "supertest";
+import { expect } from 'chai';
+import request from 'supertest';
 import app from '../../setup/ExpressServer';
 import { UserModel } from '../../models/user';
 
@@ -33,7 +33,6 @@ describe('User API test', () => {
                 .expect(201, done);
         });
 
-
         it('Should give 422 for invalid null email', (done) => {
             userRequest.email = null;
             request(app)
@@ -43,7 +42,7 @@ describe('User API test', () => {
                 .end((err, result) => {
                     expect(result.body[0].code).to.equal('invalid_type');
                     done();
-                })
+                });
         });
 
         it('Should give 422 for invalid null password', (done) => {
@@ -55,11 +54,11 @@ describe('User API test', () => {
                 .end((err, result) => {
                     expect(result.body[0].code).to.equal('invalid_type');
                     done();
-                })
+                });
         });
 
         it('Should give 422 for invalid short password', (done) => {
-            userRequest.password = "1234";
+            userRequest.password = '1234';
             request(app)
                 .post('/api/register')
                 .send(userRequest)
@@ -67,11 +66,11 @@ describe('User API test', () => {
                 .end((err, result) => {
                     expect(result.body[0].code).to.equal('too_small');
                     done();
-                })
+                });
         });
 
         it('Should give 422 for invalid email', (done) => {
-            userRequest.email = "1234";
+            userRequest.email = '1234';
             request(app)
                 .post('/api/register')
                 .send(userRequest)
@@ -79,7 +78,7 @@ describe('User API test', () => {
                 .end((err, result) => {
                     expect(result.body[0].code).to.equal('invalid_string');
                     done();
-                })
+                });
         });
 
         it('Should give 500 for duplicate email entries', (done) => {
@@ -91,8 +90,8 @@ describe('User API test', () => {
                     request(app)
                         .post('/api/register')
                         .send(userRequest)
-                        .expect(500, done)
-                })
+                        .expect(500, done);
+                });
 
         });
     });
@@ -103,8 +102,8 @@ describe('User API test', () => {
         beforeEach(async () => {
             await UserModel.deleteMany({});
             userData = {
-                email: "test@email.com",
-                password: "password"
+                email: 'test@email.com',
+                password: 'password'
             };
             await request(app)
                 .post('/api/register')
@@ -119,9 +118,8 @@ describe('User API test', () => {
                 .expect(200, done);
         });
 
-
         it('Should give 404 for invalid email', (done) => {
-            userData.email = "balh@gmail.com";
+            userData.email = 'balh@gmail.com';
             request(app)
                 .post('/api/login')
                 .send(userData)
@@ -129,15 +127,15 @@ describe('User API test', () => {
         });
 
         it('Should give 403 for invalid password', (done) => {
-            userData.password = "balh123";
+            userData.password = 'balh123';
             request(app)
                 .post('/api/login')
                 .send(userData)
-                .expect(403, done)
+                .expect(403, done);
         });
 
         it('Should give 422 for invalid short password', (done) => {
-            userData.password = "1234";
+            userData.password = '1234';
             request(app)
                 .post('/api/login')
                 .send(userData)
@@ -145,11 +143,11 @@ describe('User API test', () => {
                 .end((err, result) => {
                     expect(result.body[0].code).to.equal('too_small');
                     done();
-                })
+                });
         });
 
         it('Should give 422 for invalid email', (done) => {
-            userData.email = "1234";
+            userData.email = '1234';
             request(app)
                 .post('/api/login')
                 .send(userData)
@@ -157,7 +155,7 @@ describe('User API test', () => {
                 .end((err, result) => {
                     expect(result.body[0].code).to.equal('invalid_string');
                     done();
-                })
+                });
         });
     });
 });

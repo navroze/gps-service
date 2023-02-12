@@ -14,11 +14,11 @@ router.get('/healthcheck', (req, res) => {
     res.send({ message: 'Server is up and running' });
 });
 
-//User routes
+// User routes
 router.post('/login', requestValidator(false, userSchema), login);
 router.post('/register', requestValidator(false, userSchema), register);
 
-//GPS Routes
+// GPS Routes
 router.post('/gps-record', [requestValidator(true, gpsSchema), auth], createGpsRecordHandler);
 
 export default router;
