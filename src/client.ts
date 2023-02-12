@@ -28,9 +28,7 @@ export class Client {
 
     async sendRequest(request: gpsRequest): Promise<object | undefined> {
         return new Promise((resolve, reject) => {
-            const metadata = new grpc.Metadata();
-            metadata.add('authorization', 'yolo');
-            this.client.CreateGpsRecord(request, metadata, (err, result) => {
+            this.client.CreateGpsRecord(request, (err, result) => {
                 if (err) {
                     log.error(`Error while creating record ${err}`);
                     return reject(err);

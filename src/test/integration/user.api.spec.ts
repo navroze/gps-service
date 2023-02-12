@@ -16,8 +16,6 @@ after(() => {
     process.exit(1);
 });
 
-
-
 describe('User API test', () => {
     beforeEach(async () => {
         userRequest = {
@@ -122,28 +120,20 @@ describe('User API test', () => {
         });
 
 
-        it('Should give 500 for invalid email', (done) => {
+        it('Should give 404 for invalid email', (done) => {
             userData.email = "balh@gmail.com";
             request(app)
                 .post('/api/login')
                 .send(userData)
-                .expect(500, done);
+                .expect(404, done);
         });
 
-        it('Should give 500 for invalid password', (done) => {
-            userData.password = "balh@gmail.com";
+        it('Should give 403 for invalid password', (done) => {
+            userData.password = "balh123";
             request(app)
                 .post('/api/login')
                 .send(userData)
-                .expect(500, done);
-        });
-
-        it('Should give 500 for invalid null password', (done) => {
-            userData.password = null;
-            request(app)
-                .post('/api/login')
-                .send(userRequest)
-                .expect(500, done)
+                .expect(403, done)
         });
 
         it('Should give 422 for invalid short password', (done) => {

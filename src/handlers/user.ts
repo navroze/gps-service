@@ -1,11 +1,22 @@
 import { Request, Response } from 'express';
-import { getErrorMessage } from '../utils/error';
+import { Result } from "ts-results";
+
+import { getErrorMessage, getErrorDetails } from '../utils/error';
 import { registerOne, loginOne } from '../services/user';
+import { userResponse } from '../types/types';
 
 export const login = async (req: Request, res: Response) => {
     try {
-        const foundUser = await loginOne(req.body);
-        res.status(200).json(foundUser);
+        const result: Result<userResponse, Error> = await loginOne(req.body);
+
+        if (result.err) {
+            const errorDetails = getErrorDetails(result.val.message);
+            return res.status(errorDetails.statusCode).json({
+                "message": errorDetails.message,
+                "errorCode": errorDetails.errorCode
+            });
+        }
+        res.status(200).json(result.val);
     } catch (error) {
         return res.status(500).send(getErrorMessage(error));
     }

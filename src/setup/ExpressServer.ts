@@ -3,26 +3,13 @@ import bodyParser from 'body-parser';
 
 import { config } from '../config/config';
 import log from '../setup/Log';
-import { createGpsRecordHandler } from '../handlers/gpsRecords';
-import { login, register } from '../handlers/user';
-import { auth } from '../middleware/auth';
-import { userValidator } from '../middleware/request-middleware';
+import ApiRouter from '../routes/Api';
 
 const app = express();
 const port = config.expressServer.port;
 app.use(bodyParser.json());
 
-// Health check route
-app.get('/api/healthcheck', (req, res) => {
-    res.send({ message: 'Server is up and running' });
-});
-
-//User routes
-app.post('/api/login', userValidator, login);
-app.post('/api/register', userValidator, register);
-
-// GPS Routes
-app.post('/api/gps-record', auth, createGpsRecordHandler);
+app.use('/api', ApiRouter);
 
 app.all('*', function (req, res) {
     res.status(404).json({
