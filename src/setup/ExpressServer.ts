@@ -4,10 +4,14 @@ import bodyParser from 'body-parser';
 import { config } from '../config/config';
 import log from '../setup/Log';
 import ApiRouter from '../routes/Api';
+import morgan from 'morgan';
+
 
 const app = express();
 const port = config.expressServer.port;
 app.use(bodyParser.json());
+
+app.use(morgan('combined'));
 
 app.use('/api', ApiRouter);
 
