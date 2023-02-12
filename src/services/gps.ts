@@ -9,7 +9,6 @@ const gpsService = {
                 longitude: record.longitude,
                 email: record.email
             });
-            console.log("Saving in ", Gps.db.name);
             const savedRecord = await gps.save();
             log.info(`Record for ${record.email} saved successfully`);
             return savedRecord["_id"];

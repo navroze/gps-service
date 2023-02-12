@@ -14,7 +14,6 @@ let token: string;
 before(async () => {
     await Database.init();
     await UserModel.deleteMany({});
-    console.log("Using ", UserModel.db.name);
     let userData = {
         email: "test@email.com",
         password: "password"
@@ -67,23 +66,19 @@ describe('GPS API test', () => {
             .expect(201, done);
     });
 
-    it.only('Should create two record in the database', async () => {
+    it('Should create two record in the database', async () => {
         try {
             const result = await request(app)
                 .post('/api/gps-record')
                 .send(gpsRequest)
                 .set('Authorization', `Bearer ${token}`)
-                .expect(201)
-            console.log(result.body);
-            let records = await Gps.find();
-            console.log(Gps.db.name);
-            console.log("Record", records.length);
+                .expect(201);
             await request(app)
                 .post('/api/gps-record')
                 .send(gpsRequest)
                 .set('Authorization', `Bearer ${token}`)
                 .expect(201);
-            records = await Gps.find();
+            const records = await Gps.find();
             expect(records.length).to.equal(2);
         } catch (error) {
             console.log("error", error);
