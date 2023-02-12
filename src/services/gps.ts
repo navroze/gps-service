@@ -4,10 +4,11 @@ import log from '../setup/Log';
 const gpsService = {
     createRecord: async (record: IGps): Promise<string> => {
         try {
+            const { latitude, longitude, email } = record;
             const gps = new Gps({
-                latitude: record.latitude,
-                longitude: record.longitude,
-                email: record.email
+                latitude,
+                longitude,
+                email
             });
             const savedRecord = await gps.save();
             log.info(`Record for ${record.email} saved successfully`);

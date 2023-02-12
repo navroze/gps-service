@@ -7,6 +7,7 @@ import { userResponse } from '../types/types';
 
 export const login = async (req: Request, res: Response) => {
     try {
+        //Result will either be userResponse or Error. Here Error indicates all user defined errors
         const result: Result<userResponse, Error> = await loginOne(req.body);
 
         if (result.err) {

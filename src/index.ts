@@ -2,6 +2,7 @@ import { Server } from './server';
 import { Database } from './setup/Database';
 import { startExpressServer } from './setup/ExpressServer';
 import log from './setup/Log';
+import { getErrorMessage } from './utils/error';
 
 async function main() {
     try {
@@ -11,7 +12,7 @@ async function main() {
         await Database.init();
         await startExpressServer();
     } catch (error) {
-        log.error(`Error while booting gRPC service ${error}`);
+        log.error(getErrorMessage(error));
     }
 }
 

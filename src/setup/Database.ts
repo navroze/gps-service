@@ -4,6 +4,7 @@
 import mongoose from 'mongoose';
 
 import { config } from '../config/config';
+import { getErrorMessage } from '../utils/error';
 import log from './Log';
 
 export class Database {
@@ -14,7 +15,7 @@ export class Database {
             mongoose.set('strictQuery', true);
             mongoose.connect(dsn, (error) => {
                 if (error) {
-                    log.error('Failed to connect to the Mongo server!!');
+                    log.error(getErrorMessage(error));
                     return reject(error);
                 } else {
                     log.info('Connected to mongo server');

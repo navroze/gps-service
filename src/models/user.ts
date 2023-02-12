@@ -3,15 +3,17 @@ import bcrypt from 'bcrypt';
 
 const saltRounds = 8
 
-export interface I_UserDocument extends mongoose.Document {
+export interface I_UserDocument {
     email: string;
     password: string;
-}
+};
 
-const UserSchema: mongoose.Schema<I_UserDocument> = new mongoose.Schema({
+export interface I_UserModel extends I_UserDocument, mongoose.Document { }
+
+export const UserSchema = new mongoose.Schema<I_UserModel>({
     email: { type: String, unique: true },
     password: { type: String },
-});
+}, { timestamps: true });
 
 UserSchema.pre('save', async function (next) {
     const user = this;
@@ -21,4 +23,4 @@ UserSchema.pre('save', async function (next) {
     next();
 });
 
-export const UserModel = mongoose.model<I_UserDocument>('User', UserSchema);
+export const UserModel = mongoose.model<I_UserModel>('User', UserSchema);

@@ -10,8 +10,6 @@ COPY . .
 
 RUN npm install
 
-EXPOSE 4040 5550
-
 RUN yarn proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=src/proto/generated src/proto/*.proto
 
 # Run node server

@@ -8,4 +8,4 @@ export type ErrorObject = {
     message: string;
     type: string;
     errorCode: number
-}
+};
