@@ -55,6 +55,8 @@ npm install
 npm run dev
 ```
 
+> As we are using grpc we have a proto file in the protofolder under the src directory. In order to compile and convert the proto file into typescript we can run the command `npm run proto:gen`.Make sure executable rights are given to the .sh file by running `chmod 755 proto-gen.sh`.
+
 ## With Docker
 
 > Create a .env file in the _root_ directory and not in src directory. Use `MONGOOSE_URL_DEV=mongodb://mongo:27017/gps` in the .env file for mongodb to start properly. Here `localhost` is replaced with `mongo` for docker-compose to work.
@@ -80,14 +82,14 @@ sudo docker-compose up -d
 
 Unit test and integration have been implemented in the application. Once your app is setup run the below command to run all the unit and integration test. The command will also generate a code coverage.
 
-`npm test` or `npm run test`
+`npm run test`
 
 # Postman collection
 
 All the REST API routes are present in the postman collection. Import the collection usint the below link.
 
 ```
-https://api.postman.com/collections/25813756-f7af126c-2398-4524-83d1-5b6a59376a52?access_key=PMAT-01GS3NJDVJMQ5D18JMPK0EYXMP
+https://api.postman.com/collections/25813756-7c4139bc-4262-4d10-a814-fa4ce1d7b9b7?access_key=PMAT-01GS4PNKDKRSC26835B8QYA0FP
 ```
 
 # How to Insert a GPS record
@@ -195,8 +197,7 @@ curl --location --request POST 'localhost:8080/api/gps-record' \
 2. Implement a JWT authentication feature to pass token from grpc client to server as metadata.
 3. Do performance testing on the API's using Apache Jmeter.
 4. Use pm2 process manager for scaling application on prod.
-5. Implement feature to start the app in docker as well as test the app while it is running in docker.
-6. Create a separate file for logging only errors and API's.
+5. Create a separate file for logging only errors and API's.
 
 # How to Scale
 
